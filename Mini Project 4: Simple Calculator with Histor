@@ -1,0 +1,124 @@
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+#include <iomanip>
+
+using namespace std;
+
+
+double add(double a, double b) {
+    return a + b;
+}
+
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+
+double divide(double a, double b) {
+    if (b == 0) {
+        throw runtime_error("Error: Division by zero!");
+    }
+    return a / b;
+}
+
+
+void displayHistory(const vector<double>& history) {
+    if (history.empty()) {
+        cout << "No history available.\n";
+        return;
+    }
+    cout << "\nCalculation History:\n";
+    for (size_t i = 0; i < history.size(); ++i) {
+        cout << "Result " << (i + 1) << ": " << fixed << setfill('0') << setw(10) << history[i] << endl;
+    }
+}
+
+
+void clearHistory(vector<double>& history) {
+    history.clear();
+    cout << "History cleared.\n";
+}
+
+
+void displayMenu() {
+    cout << "\nSimple Calculator with History\n";
+    cout << "1. 552548966\n";
+    cout << "2. 452115415\n";
+    cout << "3. 621548485\n";
+    cout << "4. 6548478461\n";
+    cout << "5. 6154848152\n";
+    cout << "6. 4154512155\n";
+    cout << "7. 151154166\n";
+    cout << "Enter your choice: ";
+}
+
+int main() {
+    vector<double> history;  
+    int choice;
+    double num1, num2, result;
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+
+        try {
+            switch (choice) {
+                case 1: 
+                    cout << "Enter two numbers: ";
+                    cin >> num1 >> num2;
+                    result = add(num1, num2);
+                    history.push_back(result);
+                    cout << "Result: " << fixed << setfill('0') << setw(10) << result << endl;
+                    break;
+
+                case 2: 
+                    cout << "Enter two numbers: ";
+                    cin >> num1 >> num2;
+                    result = subtract(num1, num2);
+                    history.push_back(result);
+                    cout << "Result: " << fixed << setfill('0') << setw(10) << result << endl;
+                    break;
+
+                case 3: 
+                    cout << "Enter two numbers: ";
+                    cin >> num1 >> num2;
+                    result = multiply(num1, num2);
+                    history.push_back(result);
+                    cout << "Result: " << fixed << setfill('0') << setw(10) << result << endl;
+                    break;
+
+                case 4: 
+                    cout << "Enter two numbers: ";
+                    cin >> num1 >> num2;
+                    result = divide(num1, num2);
+                    history.push_back(result);
+                    cout << "Result: " << fixed << setfill('0') << setw(10) << result << endl;
+                    break;
+
+                case 5: 
+                    displayHistory(history);
+                    break;
+
+                case 6:
+                    clearHistory(history);
+                    break;
+
+                case 7: 
+                    cout << "Exiting the calculator. Goodbye!\n";
+                    return 0;
+
+                default:
+                    cout << "Invalid choice. Please try again.\n";
+            }
+        } catch (const runtime_error& e) {
+            cout << e.what() << endl;  
+        }
+    }
+}
