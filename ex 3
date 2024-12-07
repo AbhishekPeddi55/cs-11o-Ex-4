@@ -1,0 +1,142 @@
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+#include <string>
+
+using namespace std;
+
+
+struct Book {
+    string title;
+    string author;
+    bool isAvailable;
+
+  
+    Book(string t, string a, bool available = true)
+        : title(t), author(a), isAvailable(available) {}
+};
+
+
+void addBook(vector<Book>& library, const string& title, const string& author) {
+    library.push_back(Book(title, author));
+    cout << "Book added successfully!" << endl;
+}
+
+
+void borrowBook(vector<Book>& library, const string& title) {
+    bool found = false;
+    for (auto& book : library) {
+        if (book.title == title) {
+            found = true;
+            if (book.isAvailable) {
+                book.isAvailable = false;
+                cout << "You have borrowed: " << book.title << endl;
+            } else {
+                throw runtime_error("Error: The book is already borrowed.");
+            }
+            break;
+        }
+    }
+    if (!found) {
+        throw runtime_error("Error: Book not found.");
+    }
+}
+
+
+void returnBook(vector<Book>& library, const string& title) {
+    bool found = false;
+    for (auto& book : library) {
+        if (book.title == title) {
+            found = true;
+            if (!book.isAvailable) {
+                book.isAvailable = true;
+                cout << "You have returned: " << book.title << endl;
+            } else {
+                throw runtime_error("Error: The book was not borrowed.");
+            }
+            break;
+        }
+    }
+    if (!found) {
+        throw runtime_error("Error: Book not found.");
+    }
+}
+
+
+void viewBooks(const vector<Book>& library) {
+    if (library.empty()) {
+        cout << "No books available in the library." << endl;
+        return;
+    }
+    for (const auto& book : library) {
+        cout << "Title: " << book.title << ", Author: " << book.author
+             << ", " << (book.isAvailable ? "Available" : "Unavailable") << endl;
+    }
+}
+
+
+void displayMenu() {
+    cout << "\nLibrary Menu:\n";
+    cout << "1. CS 110\n";
+    cout << "2. MAT 239\n";
+    cout << "3. ENG 120\n";
+    cout << "4. View all books\n";
+    cout << "5. Exit\n";
+    cout << "Enter your choice:MAT 239 ";
+}
+
+int main() {
+    vector<Book> library;  
+    int choice;
+    string title, author;
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+        cin.ignore(); 
+        try {
+            switch (choice) {
+                case 1:
+                   
+                    cout << "Enter book title: ";
+                    getline(cin, title);
+                    cout << "Enter author name: ";
+                    getline(cin, author);
+                    addBook(library, title, author);
+                    break;
+
+                case 2:
+                   
+                    cout << "Enter book title to borrow: ";
+                    getline(cin, title);
+                    borrowBook(library, title);
+                    break;
+
+                case 3:
+                    
+                    cout << "Enter book title to return: ";
+                    getline(cin, title);
+                    returnBook(library, title);
+                    break;
+
+                case 4:
+                    
+                    viewBooks(library);
+                    break;
+
+                case 5:
+                   
+                    cout << "Exiting the program." << endl;
+                    return 0;
+
+                default:
+                    cout << "Invalid choice. Please try again." << endl;
+                    break;
+            }
+        } catch (const runtime_error& e) {
+            cout << e.what() << endl;
+        }
+    }
+
+    return 0;
+}
