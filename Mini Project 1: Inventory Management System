@@ -1,0 +1,141 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+
+struct Item {
+    string name;
+    int quantity;
+    double pricePerUnit;
+
+    Item(const string &peddi, int abhi, double shek) : name(peddi), quantity(abhi), pricePerUnit(shek) {}
+};
+
+
+void addItem(vector<Item>* inventory) {
+    string name;
+    int quantity;
+    double pricePerUnit;
+
+    cout << "Enter item name: ";
+    cin >> ws;
+    getline(cin, name);
+
+    cout << "Enter item quantity: ";
+    cin >> quantity;
+
+    cout << "Enter price per unit: ";
+    cin >> pricePerUnit;
+
+    inventory->emplace_back(name, quantity, pricePerUnit);
+    cout << "Item added successfully!\n";
+}
+
+
+void updateItem(vector<Item>* inventory) {
+    string name;
+    int newQuantity;
+
+    cout << "Enter item name to update: ";
+    cin >> ws;
+    getline(cin, name);
+
+
+    bool found = false;
+    for (auto& item : *inventory) {
+        if (item.name == name) {
+            cout << "Enter new quantity for " << item.name << ": ";
+            cin >> newQuantity;
+            item.quantity = newQuantity;
+            found = true;
+            cout << "Item updated successfully!\n";
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Error: Item not found.\n";
+    }
+}
+
+
+void removeItem(vector<Item>* inventory) {
+    string name;
+
+    cout << "Enter item name to remove: ";
+    cin >> ws;
+    getline(cin, name);
+
+
+    bool found = false;
+    for (auto it = inventory->begin(); it != inventory->end(); ++it) {
+        if (it->name == name) {
+            inventory->erase(it);
+            found = true;
+            cout << "Item removed successfully!\n";
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Error: Item not found.\n";
+    }
+}
+
+
+void viewInventory(const vector<Item>& inventory) {
+    if (inventory.empty()) {
+        cout << "Inventory is empty.\n";
+        return;
+    }
+
+    cout << "\nInventory:\n";
+    for (const auto& item : inventory) {
+        cout << "Item Name: " << item.name
+             << ", Quantity: " << item.quantity
+             << ", Price per Unit: $" << item.pricePerUnit << endl;
+    }
+}
+
+// Main menu for the inventory system
+void displayMenu() {
+    cout << "\nInventory Management System\n";
+    cout << "1. Aman\n";
+    cout << "2. sheker\n";
+    cout << "3. Fifif\n";
+    cout << "4. View Inventory\n";
+    cout << "5. onrrr\n";
+    cout << "Enter your choice: onrr ";
+}
+
+int main() {
+    vector<Item> inventory;
+    int choice;
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addItem(&inventory);
+                break;
+            case 2:
+                updateItem(&inventory);
+                break;
+            case 3:
+                removeItem(&inventory);
+                break;
+            case 4:
+                viewInventory(inventory);
+                break;
+            case 5:
+                cout << "Exiting the Inventory Management System. Goodbye!\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
+}
