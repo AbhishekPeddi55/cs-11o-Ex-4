@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdexcept>
 
-
 double add(double a, double b);
 double subtract(double a, double b);
 double multiply(double a, double b);
@@ -24,7 +23,7 @@ int main() {
         std::cout << "5. View History\n";
         std::cout << "6. Clear History\n";
         std::cout << "7. Exit\n";
-        std::cout << "Enter your choice: Add";
+        std::cout << "Enter your choice:Add\n";
         std::cin >> choice;
 
         double num1, num2, result;
