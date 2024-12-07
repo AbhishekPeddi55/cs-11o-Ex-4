@@ -24,7 +24,7 @@ int main() {
         std::cout << "5. View History\n";
         std::cout << "6. Clear History\n";
         std::cout << "7. Exit\n";
-        std::cout << "Enter your choice: ";
+        std::cout << "Enter your choice: Add";
         std::cin >> choice;
 
         double num1, num2, result;
